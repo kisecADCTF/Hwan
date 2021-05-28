@@ -18,11 +18,15 @@
     {
         /*
         if(preg_match('/<script>/', $_POST['text']))
-        {
+        {'
             echo "XSS FAIL";
             exit;
         }
         */
+
+        $text = $_POST['text'];
+        $test = preg_replace("/</","%lt",$text);
+
         $fp = fopen($file_path, 'w');
         flock($fp, LOCK_EX);
         fwrite($fp, $_POST['text']  .chr(13).chr(10), strlen($_POST['text']));
@@ -30,3 +34,4 @@
         fclose($fp);
         header("Refresh:0");
     }
+
